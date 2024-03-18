@@ -8,7 +8,6 @@
         public string? Patronymic { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
-        public Faculty Faculty { get; set; }
         public double Experience { get; set; }
     }
 }
