@@ -9,6 +9,6 @@ namespace RefreshCourseServer.Models.Database
         public Subject Subject { get; set; }
         public LessonType LessonType { get; set; }
         public int HoursCount { get; set; }
-        public double PayHour { get; set; }
+        //public double PayHour { get; set; }
     }
 }
