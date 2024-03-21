@@ -3,6 +3,7 @@ using RefreshCourseServer.Data;
 using RefreshCourseServer.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace RefreshCourseServer.Controllers
 {
@@ -14,6 +15,9 @@ namespace RefreshCourseServer.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetWorkLoad(int id)
         {
+            //var email = User.FindFirst("sub")?.Value;
+            //string t = User.FindFirstValue(ClaimTypes.Name);
+
             using (var serviceScope = ServiceActivator.GetScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
