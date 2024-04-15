@@ -2,6 +2,7 @@
 
 namespace RefreshCourseServer.Models.Database
 {
+    // Структура таблицы Нагрузки преподавателей
     public class WorkLoad
     {
         public int Id { get; set; }
@@ -9,6 +10,5 @@ namespace RefreshCourseServer.Models.Database
         public Subject Subject { get; set; }
         public LessonType LessonType { get; set; }
         public int HoursCount { get; set; }
-        //public double PayHour { get; set; }
     }
 }

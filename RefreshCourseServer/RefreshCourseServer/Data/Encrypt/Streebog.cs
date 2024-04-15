@@ -149,7 +149,7 @@ namespace RefreshCourseServer.Data.Encrypt
             return h;
         }
 
-        // Вычисление хэша сообщения
+        // Вычисление хэша сообщения (см. ГОСТ 34.11-2018)
         private static byte[] GetHash(byte[] m, byte[] h)
         {
             byte[] n = new byte[64];

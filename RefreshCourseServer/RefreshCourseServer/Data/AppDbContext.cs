@@ -3,6 +3,7 @@ using RefreshCourseServer.Models.Database;
 
 namespace RefreshCourseServer.Data
 {
+    // Структура БД нагрузки
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

@@ -1,5 +1,6 @@
 ﻿namespace RefreshCourseServer.Models.Database
 {
+    // Структура таблицы Группы
     public class Group
     {
         public int Id { get; set; }

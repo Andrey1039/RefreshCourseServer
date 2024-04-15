@@ -2,6 +2,7 @@
 
 namespace RefreshCourseServer.Models
 {
+    // Модель авторизации на сервере
     public class LoginModel
     {
         [Required]

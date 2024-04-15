@@ -2,6 +2,7 @@
 
 namespace RefreshCourseServer.Models
 {
+    // Модель обмена ключами с клиентом
     public class SwapModel
     {
         [Required]

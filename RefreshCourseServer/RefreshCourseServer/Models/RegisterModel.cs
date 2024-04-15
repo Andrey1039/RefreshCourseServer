@@ -2,6 +2,7 @@
 
 namespace RefreshCourseServer.Models
 {
+    // Модель регистрации на сервере
     public class RegisterModel
     {
         [Required]

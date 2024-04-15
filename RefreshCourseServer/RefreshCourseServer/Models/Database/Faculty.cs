@@ -1,5 +1,6 @@
 ﻿namespace RefreshCourseServer.Models.Database
 {
+    // Структура таблицы Факультеты
     public class Faculty
     {
         public int Id { get; set; }

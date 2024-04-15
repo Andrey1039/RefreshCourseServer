@@ -52,15 +52,13 @@ namespace RefreshCourseServer.Data.Encrypt
         [SecurityCritical]
         public static (string, string) GetKeyPair()
         {
-            //rnd.NextBytes(xRaw);
-
             BigInteger privKey = GenerateKey();
             EllipticPoint pubKey = privKey * genPoint;
 
             return (privKey.ToString(), pubKey.ToString());
         }
 
-        // Версия на 256 бит
+        // Версия алгоритма согласования ключей на 256 бит
         private static byte[] VKO_GOSTR3410_2012_256(EllipticPoint yP, BigInteger m, BigInteger q, BigInteger x)
         {
             BigInteger UKM = BigInteger.Parse("5398423985475523801");

@@ -5,3 +5,5 @@
 /RefreshCourseServer/RefreshCourseServer/obj
 /RefreshCourseServer/RefreshCourseServer/bin/Debug/net8.0
 /RefreshCourseServer/.vs
+*.db-shm
+*.db-wal

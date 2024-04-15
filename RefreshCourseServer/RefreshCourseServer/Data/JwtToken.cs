@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Data;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.Text;
 using System.Security.Claims;
-using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RefreshCourseServer.Data
 {
     public static class JwtToken
     {
+        // Генерация токена
         public static string GenerateToken(IdentityUser user, IConfiguration config)
         {
+            // Параметры токена
             var claims = new List<Claim>
             {               
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -20,6 +20,7 @@ namespace RefreshCourseServer.Data
                 new(ClaimTypes.Email, user.Email!)
             };
 
+            // Генерация токена
             var jwtToken = new JwtSecurityToken(
                 issuer: config.GetValue<string>("Jwt:Issuer")!,
                 audience: config.GetValue<string>("Jwt:Audience")!,
