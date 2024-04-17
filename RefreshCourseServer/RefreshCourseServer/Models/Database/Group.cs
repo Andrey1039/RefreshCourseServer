@@ -7,5 +7,6 @@
         public Speciality Speciality { get; set; }
         public Faculty Faculty { get; set; }
         public int StudentsCount { get; set; }
+        public int Course { get; set; }
     }
 }

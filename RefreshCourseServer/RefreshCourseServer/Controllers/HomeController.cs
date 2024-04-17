@@ -60,7 +60,7 @@ namespace RefreshCourseServer.Controllers
                             .Select(x => new
                             {
                                 Id = x.Id,
-                                GroupName = $"{x.Group.Faculty.ShortName} {x.Group.Speciality.ShortName}-{x.Group.Id}",
+                                GroupName = $"{x.Group.Faculty.ShortName} {x.Group.Speciality.ShortName}-{x.Group.Course}",
                                 SubjectName = x.Subject.SubjectName,
                                 LessonType = x.LessonType.LessonName,
                                 HoursCount = x.HoursCount,
