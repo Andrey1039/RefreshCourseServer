@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -9,14 +8,14 @@ namespace RefreshCourseServer.Data
     public static class JwtToken
     {
         // Генерация токена
-        public static string GenerateToken(IdentityUser user, IConfiguration config)
+        public static string GenerateToken(AppUser user, IConfiguration config)
         {
             // Параметры токена
             var claims = new List<Claim>
             {               
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Name, user.UserName!),
+                new(ClaimTypes.Name, user.Initials!),
                 new(ClaimTypes.Email, user.Email!)
             };
 

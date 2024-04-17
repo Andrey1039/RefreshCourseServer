@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using RefreshCourseServer.Data;
 using RefreshCourseServer.Models;
 using RefreshCourseServer.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RefreshCourseServer.Data.Encrypt;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace RefreshCourseServer.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
     [Route("api/[controller]/[action]")]
     public class AuthController : Controller
     {
@@ -82,7 +80,7 @@ namespace RefreshCourseServer.Controllers
                         loginData.Password = CipherEngine.DecryptString(loginData.Password, privateKey);
 
                         // Попытка авторизации с логином и паролем
-                        var result = await _signInManager.PasswordSignInAsync(user.UserName!, loginData.Password, false, lockoutOnFailure: true);
+                        var result = await _signInManager.PasswordSignInAsync(user.UserName!, loginData.Password, true, lockoutOnFailure: true);
 
                         if (result.Succeeded)
                         {
@@ -100,7 +98,7 @@ namespace RefreshCourseServer.Controllers
                     else
                     {
                         ModelState.AddModelError("Input.Error", "Нет учетной записи пользователя с таким логином");
-                        Unauthorized("Неверное имя пользователя или пароль");
+                        return Unauthorized("Неверное имя пользователя или пароль");
                     }
                 }
             }
@@ -119,6 +117,7 @@ namespace RefreshCourseServer.Controllers
                 {
                     Email = loginData.Email,
                     UserName = loginData.UserName,
+                    Initials = loginData.Initials,
                     PublicKey = string.Empty
                 };
 
@@ -140,7 +139,7 @@ namespace RefreshCourseServer.Controllers
         {
             string? email = User.FindFirstValue(ClaimTypes.Email);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && email != null)
             {
                 using (var serviceScope = ServiceActivator.GetScope())
                 {
@@ -150,7 +149,7 @@ namespace RefreshCourseServer.Controllers
                     if (dbContext != null)
                     {
                         // Поиск пользователя в этой БД
-                        AppUser? currentUser = await dbContext.Users
+                        var currentUser = await dbContext.Users
                             .Where(x => x.Email == email)
                             .FirstOrDefaultAsync();
 
@@ -159,7 +158,7 @@ namespace RefreshCourseServer.Controllers
                             // Выходим из системы и удаляем публичный ключ пользователя
                             await _signInManager.SignOutAsync();
 
-                            currentUser.PublicKey = null;
+                            currentUser.PublicKey = string.Empty;
                             await dbContext.SaveChangesAsync();
 
                             return Ok();
