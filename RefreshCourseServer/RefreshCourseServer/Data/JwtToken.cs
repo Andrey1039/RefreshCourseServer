@@ -25,7 +25,7 @@ namespace RefreshCourseServer.Data
                 audience: config.GetValue<string>("Jwt:Audience")!,
                 claims: claims,
                 notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddMinutes(20),
+                expires: DateTime.UtcNow.AddMinutes(1),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(config.GetValue<string>("Jwt:Secret")!)),
                     SecurityAlgorithms.HmacSha256Signature)
