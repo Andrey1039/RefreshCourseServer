@@ -7,3 +7,4 @@
 /RefreshCourseServer/.vs
 *.db-shm
 *.db-wal
+/.vs

@@ -6,7 +6,6 @@ namespace RefreshCourseServer.Data.Encrypt
 {
     public class VKOGost
     {
-        // Значения параметров для эллиптических кривых
         private static readonly BigInteger p = BigInteger.Parse(
                    "57896044618658097711785492504343953926634992332820282019728792003956564821041");
         private static readonly BigInteger a = BigInteger.Parse("7");
@@ -18,7 +17,6 @@ namespace RefreshCourseServer.Data.Encrypt
         private static readonly BigInteger yP = BigInteger.Parse(
             "4018974056539037503335449422937059775635739389905545080690979365213431566280");
 
-        // Точка генератор
         private static readonly EllipticPoint genPoint = new EllipticPoint(a, b, p, xP, yP);       
 
         // Соединение координат точек на эллиптической кривой

@@ -29,18 +29,15 @@ namespace RefreshCourseServer.Controllers
 
             using (var serviceScope = ServiceActivator.GetScope())
             {
-                // Подключения к базам данных с нагрузкой и пользователями
                 var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 var authContext = serviceScope.ServiceProvider.GetService<AuthDbContext>();
 
                 if (dbContext != null && authContext != null)
                 {
-                    // Поиск преподавателя в базе данных нагрузки по email
                     var user = await dbContext.Teachers
                         .Where(u => u.Email == email)
                         .FirstOrDefaultAsync();
 
-                    // Поиск публичного ключа авторизованного пользователя
                     var userPublicKey = await authContext.Users
                         .Where(u => u.Email == email)
                         .Select(u => u.PublicKey)
@@ -48,10 +45,8 @@ namespace RefreshCourseServer.Controllers
 
                     if (user != null)
                     {
-                        // Вычисляем общий приватный ключ для шифрования
                         var privateKey = VKOGost.GetHash(_config.GetValue<string>("Keys:PrivateKey")!, userPublicKey!);
 
-                        // Выборка записей из БД нагрузки для конкретного преподавателя
                         var result = await dbContext.WorkLoads
                             .Include(x => x.Group)
                             .Include(x => x.Subject)
@@ -64,8 +59,6 @@ namespace RefreshCourseServer.Controllers
                                 SubjectName = x.Subject.SubjectName,
                                 LessonType = x.LessonType.LessonName,
                                 HoursCount = x.HoursCount,
-                                
-                                // Вычисление оплаты за час и суммы оплаты за предмет
                                 PayHour = x.Subject.SubjectPayment * x.LessonType.PaymentCoeff,
                                 Money = x.Subject.SubjectPayment * x.LessonType.PaymentCoeff * x.HoursCount
                             })
@@ -74,7 +67,6 @@ namespace RefreshCourseServer.Controllers
 
                         var jsonData = JsonConvert.SerializeObject(result);
 
-                        // Отправляем зашифрованный json с результатом выборки
                         if (result != null)
                             return Ok(CipherEngine.EncryptString(jsonData.ToString()!, privateKey));
                     }

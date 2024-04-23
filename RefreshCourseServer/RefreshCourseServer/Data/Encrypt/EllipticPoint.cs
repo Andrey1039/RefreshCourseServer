@@ -41,7 +41,6 @@ namespace RefreshCourseServer.Data.Encrypt
 
             if (point1 != point2)
             {
-                // Формулы лямбды 4-5 (см. ГОСТ 34.10-2018)
                 BigInteger delta_y = (point2.Y - point1.Y) > 0 ? point2.Y - point1.Y : point2.Y - point1.Y + point1.P;
                 BigInteger delta_x = (point2.X - point1.X) > 0 ? point2.X - point1.X : point2.X - point1.X + point1.P;
 
@@ -55,7 +54,6 @@ namespace RefreshCourseServer.Data.Encrypt
                 lambda = (3 * (point1.X * point1.X) + point1.A) * Mathematics.ExtEuclidian(2 * point1.Y, point1.P);
             }
 
-            // Формулы 4-5 (см. ГОСТ 34.10-2018)
             BigInteger X = Mathematics.Mod(lambda * lambda - point1.X - point2.X, point1.P);
             BigInteger Y = Mathematics.Mod(lambda * (point1.X - X) - point1.Y, point1.P);
 

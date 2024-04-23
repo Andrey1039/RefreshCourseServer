@@ -7,10 +7,9 @@ namespace RefreshCourseServer.Data
 {
     public static class JwtToken
     {
-        // Генерация токена
+        // Генерация JWT токена
         public static string GenerateToken(AppUser user, IConfiguration config)
         {
-            // Параметры токена
             var claims = new List<Claim>
             {               
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -19,7 +18,6 @@ namespace RefreshCourseServer.Data
                 new(ClaimTypes.Email, user.Email!)
             };
 
-            // Генерация токена
             var jwtToken = new JwtSecurityToken(
                 issuer: config.GetValue<string>("Jwt:Issuer")!,
                 audience: config.GetValue<string>("Jwt:Audience")!,
